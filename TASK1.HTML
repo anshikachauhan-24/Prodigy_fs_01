@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Authentication System</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 50%, #1d4ed8 100%);
+        }
+        .card-shadow {
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .input-error {
+            border-color: #f87171;
+        }
+        .success-message {
+            background-color: #bbf7d0;
+            border-left: 4px solid #22c55e;
+        }
+    </style>
+</head>
+<body class="min-h-screen gradient-bg flex items-center justify-center p-4">
+    <div id="app" class="w-full max-w-md">
+        <!-- Login Component (default view) -->
+        <div id="login-component" class="bg-white rounded-lg card-shadow p-8">
+            <div class="text-center mb-8">
+                <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/9410af74-dfdf-459d-9c6a-a343160793ba.png" alt="Secure shield icon with a blue gradient background representing system security" class="mx-auto h-20 w-20 rounded-full object-cover"/>
+                <h1 class="mt-4 text-2xl font-bold text-gray-900">Welcome Back</h1>
+                <p class="mt-1 text-gray-500">Please enter your credentials to access your account</p>
+            </div>
+            
+            <form id="login-form" class="space-y-6">
+                <div class="error-message hidden bg-red-50 border-l-4 border-red-400 p-4 mb-4 rounded text-red-800">
+                    Invalid email or password. Please try again.
+                </div>
+                
+                <div>
+                    <label for="login-email" class="block text-sm font-medium text-gray-700">Email address</label>
+                    <input type="email" id="login-email" required
+                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 px-3 py-2 border">
+                    <div class="login-email-error text-red-500 text-sm mt-1 hidden">Please enter a valid email address</div>
+                </div>
+                
+                <div>
+                    <label for="login-password" class="block text-sm font-medium text-gray-700">Password</label>
+                    <input type="password" id="login-password" required minlength="6"
+                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 px-3 py-2 border">
+                    <div class="login-password-error text-red-500 text-sm mt-1 hidden">Password must be at least 6 characters</div>
+                </div>
+                
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center">
+                        <input id="remember-me" type="checkbox" 
+                            class="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                        <label for="remember-me" class="ml-2 block text-sm text-gray-900">Remember me</label>
+                    </div>
+                    
+                    <div class="text-sm">
+                        <a href="#" id="forgot-password" class="font-medium text-blue-600 hover:text-blue-500">Forgot your password?</a>
+                    </div>
+                </div>
+                
+                <div>
+                    <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                        Sign in
+                    </button>
+                </div>
+            </form>
+            
+            <div class="mt-6 text-center text-sm">
+                <p class="text-gray-600">Don't have an account? <a href="#" id="show-register" class="font-medium text-blue-600 hover:text-blue-500">Sign up</a></p>
+            </div>
+        </div>
+        
+        <!-- Register Component -->
+        <div id="register-component" class="bg-white rounded-lg card-shadow p-8 hidden">
+            <div class="text-center mb-8">
+                <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/6c562c38-e5cb-4479-a7c2-25c54b5194af.png" alt="Document with checkmark icon representing registration process" class="mx-auto h-20 w-20 rounded-full object-cover"/>
+                <h1 class="mt-4 text-2xl font-bold text-gray-900">Create Account</h1>
+                <p class="mt-1 text-gray-500">Fill in your details to get started</p>
+            </div>
+            
+            <form id="register-form" class="space-y-6">
+                <div class="success-message hidden p-4 mb-4 rounded">
+                    Registration successful! You can now log in.
+                </div>
+                
+                <div>
+                    <label for="register-name" class="block text-sm font-medium text-gray-700">Full Name</label>
+                    <input type="text" id="register-name" required
+                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 px-3 py-2 border">
+                    <div class="register-name-error text-red-500 text-sm mt-1 hidden">Please enter your full name</div>
+                </div>
+                
+                <div>
+                    <label for="register-email" class="block text-sm font-medium text-gray-700">Email address</label>
+                    <input type="email" id="register-email" required
+                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 px-3 py-2 border">
+                    <div class="register-email-error text-red-500 text-sm mt-1 hidden">Please enter a valid email address</div>
+                </div>
+                
+                <div>
+                    <label for="register-password" class="block text-sm font-medium text-gray-700">Password</label>
+                    <input type="password" id="register-password" required minlength="6"
+                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 px-3 py-2 border">
+                    <div class="register-password-error text-red-500 text-sm mt-1 hidden">Password must be at least 6 characters</div>
+                </div>
+                
+                <div>
+                    <label for="register-confirm-password" class="block text-sm font-medium text-gray-700">Confirm Password</label>
+                    <input type="password" id="register-confirm-password" required
+                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 px-3 py-2 border">
+                    <div class="register-confirm-password-error text-red-500 text-sm mt-1 hidden">Passwords do not match</div>
+                </div>
+                
+                <div>
+                    <label for="register-role" class="block text-sm font-medium text-gray-700">Account Type</label>
+                    <select id="register-role" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 px-3 py-2 border">
+                        <option value="user">User</option>
+                        <option value="admin">Admin</option>
+                    </select>
+                </div>
+                
+                <div>
+                    <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                        Sign up
+                    </button>
+                </div>
+            </form>
+            
+            <div class="mt-6 text-center text-sm">
+                <p class="text-gray-600">Already have an account? <a href="#" id="show-login" class="font-medium text-blue-600 hover:text-blue-500">Sign in</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Simulated database using localStorage
+        const usersDB = JSON.parse(localStorage.getItem('users') || '[]');
+        
+        // DOM elements
+        const loginComponent = document.getElementById('login-component');
+        const registerComponent = document.getElementById('register-component');
+        const loginForm = document.getElementById('login-form');
+        const registerForm = document.getElementById('register-form');
+        const showRegister = document.getElementById('show-register');
+        const showLogin = document.getElementById('show-login');
+        
+        // Check if user is already logged in (in a real app, you'd use tokens/cookies)
+        document.addEventListener('DOMContentLoaded', () => {
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            if (currentUser) {
+                showDashboard(currentUser);
+            }
+        });
+        
+        // Toggle between login and register forms
+        showRegister.addEventListener('click', (e) => {
+            e.preventDefault();
+            loginComponent.classList.add('hidden');
+            registerComponent.classList.remove('hidden');
+        });
+        
+        showLogin.addEventListener('click', (e) => {
+            e.preventDefault();
+            registerComponent.classList.add('hidden');
+            loginComponent.classList.remove('hidden');
+        });
+        
+        // Client-side password hashing (simplified)
+        const hashPassword = (password) => {
+            // In a real application, use proper hashing like bcrypt on the server
+            // This is a simulation for demo purposes only
+            let hash = 0;
+            for (let i = 0; i < password.length; i++) {
+                const char = password.charCodeAt(i);
+                hash = ((hash << 5) - hash) + char;
+                hash = hash & hash; // Convert to 32bit integer
+            }
+            return hash.toString();
+        };
+        
+        // Form validation helpers
+        const validateEmail = (email) => {
+            return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+        };
+        
+        // Login form handler
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            // Reset error states
+            document.querySelector('.error-message').classList.add('hidden');
+            document.querySelector('.login-email-error').classList.add('hidden');
+            document.querySelector('.login-password-error').classList.add('hidden');
+            
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+            const rememberMe = document.getElementById('remember-me').checked;
+            
+            let isValid = true;
+            
+            // Validate email
+            if (!email || !validateEmail(email)) {
+                document.querySelector('.login-email-error').classList.remove('hidden');
+                isValid = false;
+            }
+            
+            // Validate password
+            if (!password || password.length < 6) {
+                document.querySelector('.login-password-error').classList.remove('hidden');
+                isValid = false;
+            }
+            
+            if (!isValid) return;
+            
+            // Find user in database
+            const hashedPassword = hashPassword(password);
+            const user = usersDB.find(u => u.email === email && u.password === hashedPassword);
+            
+            if (user) {
+                // In a real app, you'd verify password properly and get a token from the server
+                localStorage.setItem('currentUser', JSON.stringify(user));
+                if (!rememberMe) {
+                    // In a real app, you'd set session cookie expiration
+                }
+                showDashboard(user);
+            } else {
+                document.querySelector('.error-message').classList.remove('hidden');
+            }
+        });
+        
+        // Register form handler
+        registerForm.addEventListener('submit', (e) => 
+            e.preventDefault());
+            
+            // Reset error states
+            document.querySelector('.success-message').classList.add('hidden');
+            document.querySelector('.register-name-error').classList.add('hidden');
+            document.querySelector('.register-email-error').classList.add('hidden');
+            document.querySelector('.register-password-error').classList.add('hidden');
+            document.querySelector('.register-confirm-password-error').classList.add('hidden');
+            
+            const name = document.getElementById('register-name').value;
+            const email = document.getElementById('register-email').value;
+            const password = document.getElementById('register-password').value;
+            const confirmPassword = document.getElementById('register-confirm-password').value;
+            const role = document.getElementById('register-role').value;
+            
+            let isValid = true;
+            
+            // Validate name
+            if (!name) {
+                document.querySelector('.register-name-error').class}
